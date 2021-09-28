@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import UserBar from "./User/UserBar";
+//import Task from "./Task";
+import CreateTask from "./CreateTask";
+import TodoList from "./TodoList";
 
 function App() {
+  const tasks = [
+    {
+      title: "Homework 1",
+      description: "Practice JavaScript",
+    },
+    {
+      title: "Homework 2",
+      description: "Practice HTML",
+    },
+    {
+      title: "Project",
+      description: "Practice React",
+    }
+  ]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  // <Task title = "First Note" content = "Empty" author = "Nghia Le" /> <br/> 
+  <div>
+    <UserBar /> <br/>  
+    <CreateTask />
+    <TodoList tasks = {tasks}/> 
+  </div>
+  ) //the TodoList iterates through the list and display each task
 }
 
 export default App;
