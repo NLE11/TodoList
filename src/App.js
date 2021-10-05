@@ -1,9 +1,12 @@
+import { useState } from "react";
 import UserBar from "./User/UserBar";
 //import Task from "./Task";
 import CreateTask from "./CreateTask";
 import TodoList from "./TodoList";
 
 function App() {
+  const [ user, setUser ] = useState('')  // Move the hook here
+
   const tasks = [
     {
       title: "Homework 1",
@@ -21,8 +24,8 @@ function App() {
   return (
   // <Task title = "First Note" content = "Empty" author = "Nghia Le" /> <br/> 
   <div>
-    <UserBar /> <br/>  
-    <CreateTask />
+    <UserBar user={user} setUser={setUser} /> <br/>  
+    <CreateTask user={user} />
     <TodoList tasks = {tasks}/> 
   </div>
   ) //the TodoList iterates through the list and display each task
