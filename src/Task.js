@@ -5,7 +5,8 @@ export default function Task ({ title, description, date}) {
          <div>
             <h3>{title}</h3>
             <div>{description}</div>
-            <div>{date}</div> 
+            <div>{date}</div>
+            
         </div>
     )
 }
