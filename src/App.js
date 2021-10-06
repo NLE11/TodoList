@@ -1,6 +1,5 @@
-import react, { useState, useReducer } from "react";
+import { useReducer } from "react";
 import UserBar from "./User/UserBar";
-//import Task from "./Task";
 import CreateTask from "./CreateTask";
 import TodoList from "./TodoList";
 
@@ -23,8 +22,6 @@ function App() {
     }
   ]
 
-  const [ tasks, setTasks ] = useState(initialTasks)
-
   function userReducer (state, action) {
     switch (action.type) {
         case 'LOGIN':
@@ -35,17 +32,33 @@ function App() {
         default:
             throw new Error()
     }   
-}
+  }
+
+  function taskReducer (state, action) {
+    switch (action.type) {
+        case 'CREATE_TASK':
+            const newTask = { 
+                title: action.title,
+                description: action.description
+            }
+            return [ newTask, ...state ]
+        default:
+              throw new Error()
+      }
+  }
 
   // const [ user, setUser ] = useState('')  // Move the hook here
+  // const [ tasks, setTasks ] = useState(initialTasks)
   const [ user, dispatchUser ] = useReducer(userReducer, '') // The first parameter is the function that we defines
+
+  const [ tasks, dispatchTasks ] = useReducer(taskReducer, initialTasks)
 
   return (
   // <Task title = "First Note" content = "Empty" author = "Nghia Le" /> <br/> 
   // {user && <CreateTask user={user} /> }  >>> If condition, showing nothing 
   <div>
     <UserBar user={user} dispatchUser={dispatchUser} /> <br/>  
-    {user && <CreateTask user={user} tasks={tasks} setTasks={setTasks} /> } 
+    {user && <CreateTask user={user} tasks={tasks} dispatch={dispatchTasks} /> } 
     <TodoList tasks = {tasks}/> 
   </div>
   ) //the TodoList iterates through the list and display each task
