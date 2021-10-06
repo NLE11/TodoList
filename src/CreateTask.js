@@ -1,16 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-export default function CreateTask ({ user }) {
+export default function CreateTask ({ user, tasks, setTasks }) {
+    const [ title, setTitle ] = useState('')
+    const [ description, setDescription ] = useState('')
+    function handleTitle (evt) { setTitle(evt.target.value) }
+    function handleDescription (evt) { setDescription(evt.target.value) }
+    function handleCreate () {    
+        const newTask = { title, description, author: user } // Build a task object
+        setTasks([ newTask, ...tasks ]) // Create a new array starting with newTask
+    }
     return (
-         <form onSubmit={e => e.preventDefault()}>
+         <form onSubmit={e => {e.preventDefault(); handleCreate();}}>
             <div>User: <b>{user}</b></div>
             <div>
                 <label htmlFor="create-title">Title:</label> <br/>
-                <input type="text" name="create-title" id="create-title" />
+                <input type="text" value={title} onChange={handleTitle} name="create-title" id="create-title" />
             </div>
             <div>
                 <label htmlFor="create-description">Description:</label> <br/>
-                <textarea />
+                <textarea value={description} onChange={handleDescription}/>
             </div>
             <input type="submit" value="Submit" />
         </form>
