@@ -39,9 +39,14 @@ function App() {
         case 'CREATE_TASK':
             const newTask = { 
                 title: action.title,
-                description: action.description
+                description: action.description,
+                dateCreated: action.dateCreated,
+                dateCompleted: action.dateCompleted,
+                complete: action.complete
             }
             return [ newTask, ...state ]
+        case 'DELETE_TASK':
+          
         default:
               throw new Error()
       }
@@ -58,7 +63,7 @@ function App() {
   // {user && <CreateTask user={user} /> }  >>> If condition, showing nothing 
   <div>
     <UserBar user={user} dispatchUser={dispatchUser} /> <br/>  
-    {user && <CreateTask user={user} tasks={tasks} dispatch={dispatchTasks} /> } 
+    {user && <CreateTask user={user} dispatch={dispatchTasks} /> } 
     <TodoList tasks = {tasks}/> 
   </div>
   ) //the TodoList iterates through the list and display each task

@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
 
-export default function CreateTask ({ user, tasks, dispatch }) {
+export default function CreateTask ({ user, dispatch }) {
     const [ title, setTitle ] = useState('')
     const [ description, setDescription ] = useState('')
     function handleTitle (evt) { setTitle(evt.target.value) }
     function handleDescription (evt) { setDescription(evt.target.value) }
+
     // function handleCreate () {    
     //     const newTask = { title, description, author: user } // Build a task object
     //     setTasks([ newTask, ...tasks ]) // Create a new array starting with newTask
