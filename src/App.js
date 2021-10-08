@@ -45,8 +45,8 @@ function App() {
                 complete: action.complete
             }
             return [ newTask, ...state ]
-        case 'DELETE_TASK':
-          
+        case 'TOGGLE_TASK':
+        case 'DELETE_TASK':    
         default:
               throw new Error()
       }
