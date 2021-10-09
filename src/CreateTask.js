@@ -3,14 +3,10 @@ import React, {useState} from 'react'
 export default function CreateTask ({ user, dispatch }) {
     const [ title, setTitle ] = useState('')
     const [ description, setDescription ] = useState('')
-    const [ dateCreated, setDateCreated ] = useState('')
-    const [ dateComplete, setDateCompleted ] = useState('')
+
     function handleTitle (evt) { setTitle(evt.target.value) }
     function handleDescription (evt) { setDescription(evt.target.value) }
-    function handleDateCreated (evt) { setDateCreated(evt.target.value) }
-    function handleDateCompleted (evt) { setDateCompleted(evt.target.value) }
 
-    let output = document.querySelector('h7');
     let today = new Date();
     let month = today.getMonth() + 1;
     let year = today.getFullYear();
@@ -25,15 +21,13 @@ export default function CreateTask ({ user, dispatch }) {
     }
 
     console.log(current_date_time);
-    dateCreated = current_date_time;
-        
 
     // function handleCreate () {    
     //     const newTask = { title, description, author: user } // Build a task object
     //     setTasks([ newTask, ...tasks ]) // Create a new array starting with newTask
     // }
     return (
-         <form onSubmit={e => {e.preventDefault(); dispatch({type: "CREATE_TASK", title, description});}}>
+         <form onSubmit={e => {e.preventDefault(); dispatch({type: "CREATE_TASK", title, description, dateCreated: current_date_time, dateCompleted: null, complete: false});}}>
             <div>User: <b>{user}</b></div>
             <div>
                 <label htmlFor="create-title">Title:</label> <br/>
@@ -42,10 +36,6 @@ export default function CreateTask ({ user, dispatch }) {
             <div>
                 <label htmlFor="create-description">Description:</label> <br/>
                 <textarea value={description} onChange={handleDescription}/>
-            </div>
-            <div>
-                <label htmlFor="create-dateCreated" value={dateCreated} onChange={handleDateCreated}>Date Created: </label> 
-                
             </div>
             <input type="submit" value="Submit" />
         </form>

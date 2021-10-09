@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import UserBar from "./User/UserBar";
 import CreateTask from "./CreateTask";
 import TodoList from "./TodoList";
+import nextId from "react-id-generator" // npm install react-id-generator
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
     switch (action.type) {
         case 'CREATE_TASK':
             const newTask = { 
+                index: nextId(),
                 title: action.title,
                 description: action.description,
                 dateCreated: action.dateCreated,
