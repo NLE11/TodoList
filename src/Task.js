@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import { ThemeContext, StateContext } from "./Contexts";
 
 export default function Task({
   index,
@@ -7,7 +9,7 @@ export default function Task({
   dateCreated,
   dateCompleted,
   complete,
-  dispatch, // pass the dispatch
+  //dispatch, //No need this because we already pass the dispatch from StateContext
 }) {
   let today = new Date();
   let month = today.getMonth() + 1;
@@ -22,9 +24,12 @@ export default function Task({
     return num < 10 ? `0${num}` : num;
   }
 
+  const { secondaryColor } = useContext(ThemeContext); // Take out the secondary color from the ThemeContext and use it for title
+  const { dispatch } = useContext(StateContext);
+
   return (
     <div>
-      <h3>{title}</h3>
+      <h3 style={{ color: secondaryColor }}>{title}</h3>
       <div>{description}</div>
       <div>
         <h7>Date Created: {dateCreated}</h7>

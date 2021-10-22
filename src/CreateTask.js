@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { StateContext } from "./Contexts";
 
-export default function CreateTask({ user, dispatch }) {
+export default function CreateTask() {
+  const { state, dispatch } = useContext(StateContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -45,7 +47,7 @@ export default function CreateTask({ user, dispatch }) {
       }}
     >
       <div>
-        User: <b>{user}</b>
+        User: <b>{state.user}</b>
       </div>
       <div>
         <label htmlFor="create-title">Title:</label> <br />
