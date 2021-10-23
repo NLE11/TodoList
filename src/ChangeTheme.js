@@ -1,8 +1,9 @@
-import React from "react";
-const THEMES = [
-  { primaryColor: "deepskyblue", secondaryColor: "coral" },
-  { primaryColor: "orchid", secondaryColor: "mediumseagreen" },
-];
+import React, { useState, useEffect } from "react";
+
+// const THEMES = [
+//   { primaryColor: "deepskyblue", secondaryColor: "coral" },
+//   { primaryColor: "orchid", secondaryColor: "mediumseagreen" },
+// ];
 
 function ThemeItem({ theme, active, onClick }) {
   return (
@@ -21,6 +22,13 @@ function ThemeItem({ theme, active, onClick }) {
 }
 
 export default function ChangeTheme({ theme, setTheme }) {
+  const [themes, setThemes] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/themes") // Go to setupServer to get the Path
+      .then((result) => result.json()) // Get the string and transform it into json object
+      .then((themes) => setThemes(themes)); // Then call Setthemes to pass that json object
+  }, []);
   function isActive(t) {
     // Take the current theme and check to see which theme is currently active
     return (
@@ -31,7 +39,7 @@ export default function ChangeTheme({ theme, setTheme }) {
   return (
     <div>
       Change theme:
-      {THEMES.map((t, i) => (
+      {themes.map((t, i) => (
         <ThemeItem
           key={"theme-" + i}
           theme={t}
