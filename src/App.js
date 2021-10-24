@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     // This useEffect hoook only trigger the network call when the tasks change
     if (tasks && tasks.data) {
-      dispatch({ type: "FETCH_TASKS", tasks: tasks.data }); // Within the tasks reducers I need a new action FETCH_TASK
+      dispatch({ type: "FETCH_TASKS", tasks: tasks.data.reverse() }); // Within the tasks reducers I need a new action FETCH_TASK
     }
   }, [tasks]);
 

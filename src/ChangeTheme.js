@@ -37,6 +37,7 @@ export default function ChangeTheme({ theme, setTheme }) {
     method: "get",
   }));
 
+  // eslint-disable-next-line
   useEffect(getThemes, []); // Once useEffect invoke getThemes, the response is present in the "themes" variable
 
   const { data, isLoading } = themes;
