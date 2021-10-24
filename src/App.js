@@ -1,5 +1,5 @@
 // Shift + Option + F
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useReducer } from "react";
 import UserBar from "./User/UserBar";
 import CreateTask from "./CreateTask";
@@ -10,6 +10,8 @@ import { ThemeContext, StateContext } from "./Contexts";
 
 import appReducer from "./Reducers";
 import ChangeTheme from "./ChangeTheme";
+
+import { useResource } from "react-request-hook";
 
 //export const ThemeContext = React.createContext({ primaryColor: "blue" }); //Create a context with one key blue
 
@@ -24,10 +26,24 @@ function App() {
 
   // replace the two reducers in App.js with a single reducer hook
 
+  const [tasks, getTasks] = useResource(() => ({
+    url: "/tasks",
+    method: "get",
+  }));
+
   const [state, dispatch] = useReducer(appReducer, {
     user: "",
-    tasks: initialTasks,
+    tasks: initialTasks, // Define tasks with an empty list
   });
+
+  useEffect(getTasks, []);
+
+  useEffect(() => {
+    // This useEffect hoook only trigger the network call when the tasks change
+    if (tasks && tasks.data) {
+      dispatch({ type: "FETCH_TASKS", tasks: tasks.data }); // Within the tasks reducers I need a new action FETCH_TASK
+    }
+  }, [tasks]);
 
   // Update state
   const { user } = state;

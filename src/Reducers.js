@@ -38,6 +38,8 @@ function taskReducer(state, action) {
     case "DELETE_TASK":
       const prevTask = state.filter((task) => task.index !== action.index);
       return [...prevTask]; // only return the prev task
+    case "FETCH_TASKS":
+      return action.tasks; // Grab the tasks from the server
     default:
       return state;
   }

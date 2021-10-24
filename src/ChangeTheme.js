@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+//import { useState } from "react"; // No longer needed
+import { useResource } from "react-request-hook";
 
 // const THEMES = [
 //   { primaryColor: "deepskyblue", secondaryColor: "coral" },
@@ -22,13 +24,23 @@ function ThemeItem({ theme, active, onClick }) {
 }
 
 export default function ChangeTheme({ theme, setTheme }) {
-  const [themes, setThemes] = useState([]);
+  //const [themes, setThemes] = useState([]); // No longer need this because the state is now being managed bby Resource
 
-  useEffect(() => {
-    fetch("/api/themes") // Go to setupServer to get the Path
-      .then((result) => result.json()) // Get the string and transform it into json object
-      .then((themes) => setThemes(themes)); // Then call Setthemes to pass that json object
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/themes") // Go to setupServer to get the Path
+  //     .then((result) => result.json()) // Get the string and transform it into json object
+  //     .then((themes) => setThemes(themes)); // Then call Setthemes to pass that json object. The "themes" here is not the "themes" in useState.
+  // }, []);
+
+  const [themes, getThemes] = useResource(() => ({
+    url: "/themes",
+    method: "get",
+  }));
+
+  useEffect(getThemes, []); // Once useEffect invoke getThemes, the response is present in the "themes" variable
+
+  const { data, isLoading } = themes;
+
   function isActive(t) {
     // Take the current theme and check to see which theme is currently active
     return (
@@ -37,16 +49,19 @@ export default function ChangeTheme({ theme, setTheme }) {
     );
   }
   return (
+    // isLoading check if the data is actually present before execution
     <div>
       Change theme:
-      {themes.map((t, i) => (
-        <ThemeItem
-          key={"theme-" + i}
-          theme={t}
-          active={isActive(t)}
-          onClick={() => setTheme(t)}
-        />
-      ))}{" "}
+      {isLoading && "Loading themes..."}
+      {data &&
+        data.map((t, i) => (
+          <ThemeItem
+            key={"theme-" + i}
+            theme={t}
+            active={isActive(t)}
+            onClick={() => setTheme(t)}
+          />
+        ))}{" "}
     </div>
   );
 }
