@@ -16,7 +16,7 @@ function taskReducer(state, action) {
   switch (action.type) {
     case "CREATE_TASK":
       const newTask = {
-        index: nextId(),
+        id: action.id, // We cannot use the nextId() because the server sent us a new one
         title: action.title,
         description: action.description,
         dateCreated: action.dateCreated,
@@ -25,9 +25,9 @@ function taskReducer(state, action) {
       };
       return [newTask, ...state];
     case "TOGGLE_TASK":
-      const remainTask = state.filter((task) => task.index !== action.index);
+      const remainTask = state.filter((task) => task.id !== action.id);
       const updateTask = {
-        index: action.index,
+        id: action.id,
         title: action.title,
         description: action.description,
         dateCreated: action.dateCreated,
@@ -36,7 +36,7 @@ function taskReducer(state, action) {
       };
       return [...remainTask, updateTask]; // prevTask has some values not just one
     case "DELETE_TASK":
-      const prevTask = state.filter((task) => task.index !== action.index);
+      const prevTask = state.filter((task) => task.id !== action.id);
       return [...prevTask]; // only return the prev task
     case "FETCH_TASKS":
       return action.tasks; // Grab the tasks from the server

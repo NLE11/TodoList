@@ -32,10 +32,11 @@ export default function CreateTask() {
   );
 
   useEffect(() => {
-    if (task && task.data) {
+    if (task && task.isLoading === false && task.data) {
+      // if the isLoading is false then the response is success then we can perform the dispatch
       dispatch({
         type: "CREATE_TASK",
-        index: task.data.id,
+        id: task.data.id,
         title: task.data.title,
         description: task.data.description,
         dateCreated: task.data.dateCreated,

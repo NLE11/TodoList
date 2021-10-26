@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-
+import React, { useContext, useEffect } from "react";
+import { useResource } from "react-request-hook";
 import { ThemeContext, StateContext } from "./Contexts";
 
 export default function Task({
-  index,
+  id,
   title,
   description,
   dateCreated,
@@ -26,6 +26,22 @@ export default function Task({
 
   const { secondaryColor } = useContext(ThemeContext); // Take out the secondary color from the ThemeContext and use it for title
   const { dispatch } = useContext(StateContext);
+
+  const [task, deleteTask] = useResource(() => ({
+    url: `/tasks/${id}`,
+    method: "delete",
+  }));
+
+  useEffect(() => {
+    if (task && task.isLoading === false && task.data !== undefined) {
+      // Check if the task exists on server
+      dispatch({ type: "DELETE_TASK", id });
+    }
+  }, [task]);
+
+  const handleDelete = () => {
+    deleteTask();
+  };
 
   return (
     <div>
@@ -50,7 +66,7 @@ export default function Task({
                 }
                 dispatch({
                   type: "TOGGLE_TASK",
-                  index,
+                  id,
                   title,
                   description,
                   dateCreated,
@@ -65,16 +81,7 @@ export default function Task({
       </h4>
       <h4>
         <div>
-          <button
-            onClick={(e) => {
-              dispatch({
-                type: "DELETE_TASK",
-                index,
-              });
-            }}
-          >
-            Delete
-          </button>
+          <button onClick={handleDelete}>Delete</button>
         </div>
       </h4>
     </div>
