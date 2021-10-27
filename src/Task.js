@@ -32,6 +32,15 @@ export default function Task({
     method: "delete",
   }));
 
+  const [statusTask, toggleTask] = useResource(
+    ({ complete, dateCompleted }) => ({
+      // Pass the arguments that need to change
+      url: `/tasks/${id}`,
+      method: "patch",
+      data: { complete, dateCompleted },
+    })
+  );
+
   useEffect(() => {
     if (task && task.isLoading === false && task.data !== undefined) {
       // Check if the task exists on server
@@ -39,8 +48,33 @@ export default function Task({
     }
   }, [task]);
 
+  useEffect(() => {
+    if (statusTask && statusTask.isLoading === false && statusTask.data) {
+      dispatch({
+        // This to decide which fields I want to update
+        type: "TOGGLE_TASK",
+        id: statusTask.data.id,
+        complete: statusTask.data.complete,
+        dateCompleted: statusTask.data.dateCompleted,
+        dateCreated: statusTask.data.dateCreated,
+        description: statusTask.data.description,
+        title: statusTask.data.title,
+      });
+    }
+  }, [statusTask]);
+
   const handleDelete = () => {
     deleteTask();
+  };
+
+  const handleComplete = (evt) => {
+    let completeDate = null;
+    if (evt.target.checked) {
+      completeDate = complete_date_and_time;
+    } else {
+      completeDate = null;
+    }
+    toggleTask({ complete: evt.target.checked, dateCompleted: completeDate });
   };
 
   return (
@@ -60,20 +94,7 @@ export default function Task({
             <input
               type="checkbox"
               checked={complete} // Pay attention on the checkbox
-              onChange={(e) => {
-                if (complete === true) {
-                  complete_date_and_time = null;
-                }
-                dispatch({
-                  type: "TOGGLE_TASK",
-                  id,
-                  title,
-                  description,
-                  dateCreated,
-                  dateCompleted: complete_date_and_time,
-                  complete: !complete,
-                });
-              }}
+              onChange={handleComplete}
             ></input>
             Complete
           </label>
