@@ -7,6 +7,7 @@ import { StateContext } from "../Contexts";
 // Start at Userbar: Import useState hook, set up some state to hold user and then use map to update user, pass setUser to login, logout component as a prob.
 // Function setUser can now be used in LogIn LogOut and Register
 export default function UserBar() {
+  const Logout = React.lazy(() => import("./LogOut")); // Import the log out component here
   // const [ user, setUser ] = useState('') // This is the State hook. If I put a name in here, it returns Logout. Moving this to App.
   const { state } = useContext(StateContext); // Take the state from StateContext
   // If user return empty then log out, if not, return log in or register

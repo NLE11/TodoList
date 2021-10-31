@@ -2,13 +2,16 @@ import React, { useContext, useEffect } from "react";
 import { useResource } from "react-request-hook";
 import { ThemeContext, StateContext } from "./Contexts";
 
-export default function Task({
+import { Link } from "react-navi";
+
+function Task({
   id,
   title,
   description,
   dateCreated,
   dateCompleted,
   complete,
+  short = false,
   //dispatch, //No need this because we already pass the dispatch from StateContext
 }) {
   let today = new Date();
@@ -26,6 +29,13 @@ export default function Task({
 
   const { secondaryColor } = useContext(ThemeContext); // Take out the secondary color from the ThemeContext and use it for title
   const { dispatch } = useContext(StateContext);
+
+  let processedDescription = description;
+  if (short) {
+    if (description.length > 30) {
+      processedDescription = description.substring(0, 30) + "...";
+    }
+  }
 
   const [task, deleteTask] = useResource(() => ({
     url: `/tasks/${id}`,
@@ -79,13 +89,15 @@ export default function Task({
 
   return (
     <div>
-      <h3 style={{ color: secondaryColor }}>{title}</h3>
-      <div>{description}</div>
+      <Link href={`/task/${id}`}>
+        <h3 style={{ color: secondaryColor }}>{title}</h3>
+      </Link>
+      <div>{processedDescription}</div>
       <div>
-        <h7>Date Created: {dateCreated}</h7>
+        <h5>Date Created: {dateCreated}</h5>
       </div>
       <div>
-        <h7>Date Completed: {dateCompleted}</h7>
+        <h5>Date Completed: {dateCompleted}</h5>
       </div>
       <h4>
         <div>
@@ -105,6 +117,14 @@ export default function Task({
           <button onClick={handleDelete}>Delete</button>
         </div>
       </h4>
+      {short && (
+        <div>
+          <br />
+          <Link href={`/task/${id}`}>View full post</Link>
+        </div>
+      )}
     </div>
   );
 }
+
+export default React.memo(Task);
