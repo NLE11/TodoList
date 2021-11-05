@@ -22,6 +22,8 @@ import CreateTask from "./CreateTask";
 import TaskPage from "./Pages/TaskPage";
 //export const ThemeContext = React.createContext({ primaryColor: "blue" }); //Create a context with one key blue
 
+import { Container } from "react-bootstrap";
+
 function App() {
   const initialTasks = [];
 
@@ -80,11 +82,12 @@ function App() {
           {/* <HeaderBar setTheme={setTheme} />
           <HomePage /> */}
           <Router routes={routes}>
-            <div style={{ padding: 8 }}>
+            {/* Replace div with container */}
+            <Container>
               <HeaderBar setTheme={setTheme} />
               <hr />
               <View />
-            </div>
+            </Container>
           </Router>
 
           {/* <Header text="My Todo List" />

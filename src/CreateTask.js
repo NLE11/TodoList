@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { StateContext } from "./Contexts";
 import { useResource } from "react-request-hook";
 
+import { useNavigation } from "react-navi";
+
 export default function CreateTask() {
   const { state, dispatch } = useContext(StateContext);
   const [title, setTitle] = useState("");
@@ -31,6 +33,8 @@ export default function CreateTask() {
     })
   );
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     if (task && task.isLoading === false && task.data) {
       // if the isLoading is false then the response is success then we can perform the dispatch
@@ -43,6 +47,7 @@ export default function CreateTask() {
         dateCompleted: task.data.dateCompleted,
         complete: task.data.complete,
       });
+      navigation.navigate(`/task/${task.data.id}`); // Create post at this post
     }
   }, [task]);
 
