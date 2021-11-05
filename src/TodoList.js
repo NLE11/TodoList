@@ -14,7 +14,7 @@ export default function TodoList() {
       {tasks
         .sort((argument1, argument2) => (argument1.id > argument2.id ? 1 : -1))
         .map((t, i) => (
-          <Task {...t} key={"task-" + i} />
+          <Task {...t} short={true} key={"task-" + i} index={t.id} />
         ))}
     </div>
   );

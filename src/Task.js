@@ -2,13 +2,17 @@ import React, { useContext, useEffect } from "react";
 import { useResource } from "react-request-hook";
 import { ThemeContext, StateContext } from "./Contexts";
 
-export default function Task({
+import { Link } from "react-navi";
+import { Card, Button } from "react-bootstrap";
+
+function Task({
   id,
   title,
   description,
   dateCreated,
   dateCompleted,
   complete,
+  short = false,
   //dispatch, //No need this because we already pass the dispatch from StateContext
 }) {
   let today = new Date();
@@ -26,6 +30,13 @@ export default function Task({
 
   const { secondaryColor } = useContext(ThemeContext); // Take out the secondary color from the ThemeContext and use it for title
   const { dispatch } = useContext(StateContext);
+
+  let processedDescription = description;
+  if (short) {
+    if (description.length > 30) {
+      processedDescription = description.substring(0, 30) + "...";
+    }
+  }
 
   const [task, deleteTask] = useResource(() => ({
     url: `/tasks/${id}`,
@@ -78,33 +89,44 @@ export default function Task({
   };
 
   return (
-    <div>
-      <h3 style={{ color: secondaryColor }}>{title}</h3>
-      <div>{description}</div>
-      <div>
-        <h7>Date Created: {dateCreated}</h7>
-      </div>
-      <div>
-        <h7>Date Completed: {dateCompleted}</h7>
-      </div>
-      <h4>
-        <div>
-          <label>
-            {" "}
-            <input
-              type="checkbox"
-              checked={complete} // Pay attention on the checkbox
-              onChange={handleComplete}
-            ></input>
-            Complete
-          </label>
-        </div>
-      </h4>
-      <h4>
-        <div>
-          <button onClick={handleDelete}>Delete</button>
-        </div>
-      </h4>
-    </div>
+    <Card>
+      <Card.Body>
+        <Card.Title>
+          <Link style={{ color: secondaryColor }} href={`/task/${id}`}>
+            {title}
+          </Link>
+        </Card.Title>
+        <br></br>
+        <Card.Subtitle>
+          <i>
+            Date Created: <b>{dateCreated}</b>
+            <br></br>
+          </i>
+          <i>
+            Date Completed: <b>{dateCompleted}</b>
+            <br></br>
+          </i>
+          <div>
+            <label>
+              {" "}
+              <input
+                type="checkbox"
+                checked={complete} // Pay attention on the checkbox
+                onChange={handleComplete}
+              ></input>
+              Complete
+            </label>
+          </div>
+          <Button variant="primary" onClick={handleDelete} size="sm">
+            Delete
+          </Button>{" "}
+        </Card.Subtitle>
+        <br></br>
+        <Card.Text>{processedDescription}</Card.Text>
+        {short && <Link href={`/task/${id}`}>View full task note</Link>}
+      </Card.Body>
+    </Card>
   );
 }
+
+export default React.memo(Task);
