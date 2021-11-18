@@ -27,7 +27,7 @@ export default function HeaderBar({ setTheme }) {
             )}
             {
               <Nav.Link>
-                <Link href="/users">User List</Link>
+                <Link href="/user">User List</Link>
               </Nav.Link>
             }
             {/* <ChangeTheme theme={theme} setTheme={setTheme} /> */}

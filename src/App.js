@@ -70,7 +70,7 @@ function App() {
     "/task/:id": route((req) => {
       return { view: <TaskPage id={req.params.id} /> };
     }),
-    "/users": route({ view: <UserListPage /> }),
+    "/user": route({ view: <UserListPage /> }),
   });
 
   return (
