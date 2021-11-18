@@ -25,7 +25,7 @@ export default function HeaderBar({ setTheme }) {
                 <Link href="/task/create">Create New Post</Link>
               </Nav.Link>
             )}
-            <ChangeTheme theme={theme} setTheme={setTheme} />
+            {/* <ChangeTheme theme={theme} setTheme={setTheme} /> */}
           </Nav>
           <React.Suspense fallback={"Loading..."}>
             <UserBar />
