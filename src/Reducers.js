@@ -46,6 +46,8 @@ function taskReducer(state, action) {
       return [...prevTask]; // only return the prev task
     case "FETCH_TASKS":
       return action.tasks; // Grab the tasks from the server
+    case "CLEAR_TASKS":
+      return [];
     default:
       return state;
   }

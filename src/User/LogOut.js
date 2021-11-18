@@ -9,6 +9,7 @@ export default function Logout() {
       onSubmit={(e) => {
         e.preventDefault();
         dispatch({ type: "LOGOUT" });
+        dispatch({ type: "CLEAR_TASKS" });
       }}
     >
       Logged in as: <b>{state.user.username}</b>
