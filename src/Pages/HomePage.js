@@ -8,16 +8,26 @@ export default function HomePage() {
   const [tasks, getTasks] = useResource(() => ({
     url: "/task",
     method: "get",
+    headers: { Authorization: `${state.user.access_token}` },
   }));
 
-  useEffect(getTasks, []);
+  useEffect(() => {
+    if (state.user.access_token) {
+      getTasks();
+    }
+  }, []);
+
+  useEffect(() => {
+    getTasks();
+  }, [state.user.access_token]);
 
   useEffect(() => {
     // This useEffect hoook only trigger the network call when the tasks change
-    if (tasks && tasks.data) {
-      dispatch({ type: "FETCH_TASKS", tasks: tasks.data.reverse() }); // Within the tasks reducers I need a new action FETCH_TASK
+    if (tasks && tasks.isLoading === false && tasks.data) {
+      dispatch({ type: "FETCH_TASKS", tasks: tasks.data.tasks }); // Within the tasks reducers I need a new action FETCH_TASK
     }
   }, [tasks]);
+
   const { data, isLoading } = tasks;
   return (
     <>

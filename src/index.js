@@ -7,7 +7,8 @@ import { RequestProvider } from "react-request-hook";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api/", // Passing the proxy path
+  // baseURL: "/", // Passing the proxy path
+  baseURL: "http://localhost:3000/api/",
 });
 
 // Render the app in the root div within the html in the public folder
