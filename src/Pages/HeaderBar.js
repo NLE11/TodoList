@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import CreateTask from "../CreateTask";
+// import CreateTask from "../CreateTask";
 import UserBar from "../User/UserBar";
 import Header from "../Header";
-import ChangeTheme from "../ChangeTheme";
+// import ChangeTheme from "../ChangeTheme";
 import { ThemeContext, StateContext } from "../Contexts";
 import { Link } from "react-navi";
 import { Navbar, Nav, Container } from "react-bootstrap";
@@ -22,9 +22,14 @@ export default function HeaderBar({ setTheme }) {
           <Nav className="me-auto">
             {user.username && (
               <Nav.Link>
-                <Link href="/task/create">Create New Post</Link>
+                <Link href="/task/create">Create New Task</Link>
               </Nav.Link>
             )}
+            {
+              <Nav.Link>
+                <Link href="/users">User List</Link>
+              </Nav.Link>
+            }
             {/* <ChangeTheme theme={theme} setTheme={setTheme} /> */}
           </Nav>
           <React.Suspense fallback={"Loading..."}>
