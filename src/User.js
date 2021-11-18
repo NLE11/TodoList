@@ -7,11 +7,7 @@ function User({ id, author }) {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>
-          <Link style={{ color: secondaryColor }} href={`/user/${id}`}>
-            {author}
-          </Link>
-        </Card.Title>
+        <Card.Title>{author}</Card.Title>
         <br></br>
       </Card.Body>
     </Card>

@@ -23,6 +23,7 @@ import TaskPage from "./Pages/TaskPage";
 //export const ThemeContext = React.createContext({ primaryColor: "blue" }); //Create a context with one key blue
 
 import { Container } from "react-bootstrap";
+import UserListPage from "./Pages/UserListPage";
 
 function App() {
   const initialTasks = [];
@@ -43,6 +44,7 @@ function App() {
   const [state, dispatch] = useReducer(appReducer, {
     user: {},
     tasks: initialTasks, // Define tasks with an empty list
+    users: [],
   });
 
   // useEffect(getTasks, []);
@@ -68,6 +70,7 @@ function App() {
     "/task/:id": route((req) => {
       return { view: <TaskPage id={req.params.id} /> };
     }),
+    "/users": route({ view: <UserListPage /> }),
   });
 
   return (

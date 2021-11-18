@@ -51,11 +51,20 @@ function taskReducer(state, action) {
   }
 }
 
+function usersReducer(state, action) {
+  switch (action.type) {
+    case "FETCH_USERS":
+      return action.users;
+    default:
+      return state;
+  }
+}
 export default function appReducer(state, action) {
   //In this appReducer function, we are going to call the other two reducer functions, and return the full state tree:
 
   return {
     user: userReducer(state.user, action),
     tasks: taskReducer(state.tasks, action),
+    users: usersReducer(state.users, action),
   };
 }
