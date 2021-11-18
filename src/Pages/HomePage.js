@@ -6,7 +6,7 @@ import TodoList from "../TodoList";
 export default function HomePage() {
   const { state, dispatch } = useContext(StateContext);
   const [tasks, getTasks] = useResource(() => ({
-    url: "/tasks",
+    url: "/task",
     method: "get",
   }));
 

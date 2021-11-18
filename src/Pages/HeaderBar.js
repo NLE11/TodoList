@@ -20,7 +20,7 @@ export default function HeaderBar({ setTheme }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {user && (
+            {user.username && (
               <Nav.Link>
                 <Link href="/task/create">Create New Post</Link>
               </Nav.Link>

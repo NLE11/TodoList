@@ -1,12 +1,18 @@
-import nextId from "react-id-generator"; // npm install react-id-generator
+// import nextId from "react-id-generator"; // npm install react-id-generator
 
 function userReducer(state, action) {
   switch (action.type) {
     case "LOGIN":
     case "REGISTER":
-      return action.username;
+      return {
+        username: action.username,
+        access_token: action.access_token,
+      };
     case "LOGOUT":
-      return "";
+      return {
+        username: undefined,
+        access_token: undefined,
+      };
     default:
       return state;
   }
