@@ -41,7 +41,7 @@ function App() {
   // }));
 
   const [state, dispatch] = useReducer(appReducer, {
-    user: "",
+    user: {},
     tasks: initialTasks, // Define tasks with an empty list
   });
 

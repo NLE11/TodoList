@@ -55,7 +55,7 @@ function Task({
   useEffect(() => {
     if (task && task.isLoading === false && task.data !== undefined) {
       // Check if the task exists on server
-      dispatch({ type: "DELETE_TASK", id });
+      dispatch({ type: "DELETE_TASK", id: task.data.id });
     }
   }, [task]);
 
@@ -123,7 +123,7 @@ function Task({
         </Card.Subtitle>
         <br></br>
         <Card.Text>{processedDescription}</Card.Text>
-        {short && <Link href={`/task/${id}`}>View full task note</Link>}
+        {short && <Link href={`/task/${id}`}>View full task</Link>}
       </Card.Body>
     </Card>
   );

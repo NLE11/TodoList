@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useResource } from "react-request-hook";
+import { StateContext } from "../Contexts";
 
 import Task from "../Task";
 import { Link } from "react-navi";
 
 export default function TaskPage({ id }) {
+  const { state } = useContext(StateContext);
   const [task, getTask] = useResource(() => ({
-    url: `/tasks/${id}`,
+    url: `/task/${id}`,
+    headers: { Authorization: `${state.user.access_token}` },
     method: "get",
   }));
   useEffect(getTask, [id]);

@@ -26,10 +26,18 @@ export default function CreateTask() {
 
   // Make a call using resource hook to make a POST request to our API to persist the data to db.json before calling dispatch which update the whole state
   const [task, createTask] = useResource(
-    ({ title, description, dateCreated, dateCompleted, complete }) => ({
-      url: "/tasks",
+    ({ title, description, dateCreated, dateCompleted, complete, author }) => ({
+      url: "/task",
       method: "post",
-      data: { title, description, dateCreated, dateCompleted, complete },
+      headers: { Authorization: `${state.user.access_token}` },
+      data: {
+        title,
+        description,
+        dateCreated,
+        dateCompleted,
+        complete,
+        author,
+      },
     })
   );
 
@@ -46,8 +54,10 @@ export default function CreateTask() {
         dateCreated: task.data.dateCreated,
         dateCompleted: task.data.dateCompleted,
         complete: task.data.complete,
+        author: state.user.username,
       });
-      navigation.navigate(`/task/${task.data.id}`); // Create post at this post
+      console.log(task.data);
+      navigation.navigate(`/task/${task.data.id}`); // Create task at this task
     }
   }, [task]);
 
@@ -65,6 +75,7 @@ export default function CreateTask() {
       dateCreated: current_date_time,
       dateCompleted: null,
       complete: false,
+      author: state.user.username,
     });
   }
 
@@ -80,7 +91,7 @@ export default function CreateTask() {
       }}
     >
       <div>
-        User: <b>{state.user}</b>
+        User: <b>{state.user.username}</b>
       </div>
       <div>
         <label htmlFor="create-title">Title:</label> <br />

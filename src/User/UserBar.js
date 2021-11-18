@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import Login from "./LogIn";
-import Logout from "./LogOut";
 import Register from "./Register";
 import { StateContext } from "../Contexts";
 import { Button } from "react-bootstrap";
@@ -15,7 +14,7 @@ export default function UserBar() {
   // const [ user, setUser ] = useState('') // This is the State hook. If I put a name in here, it returns Logout. Moving this to App.
   const { state } = useContext(StateContext); // Take the state from StateContext
   // If user return empty then log out, if not, return log in or register
-  if (state.user) {
+  if (state.user.username) {
     return <Logout />;
   } else {
     return (

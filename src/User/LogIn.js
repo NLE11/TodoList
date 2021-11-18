@@ -21,19 +21,25 @@ export default function Login({ show, handleClose }) {
 
   // Retrieve information from db.jason
   const [user, login] = useResource((username, password) => ({
-    url: `/login/${encodeURI(username)}/${encodeURI(password)}`,
-    method: "get",
+    url: "auth/login",
+    method: "post",
+    data: { username, password },
   }));
 
   // Track to see if it's a fail or successful log in
   useEffect(() => {
-    if (user && user.data) {
-      if (user.data.length > 0) {
-        // If server gives us something back
-        setLoginFailed(false);
-        dispatch({ type: "LOGIN", username: user.data[0].username });
+    if (user && user.isLoading === false && (user.data || user.error)) {
+      if (user.error) {
+        setLoginFailed(true);
+        alert("failed");
       } else {
-        setLoginFailed(true); // Display an error message like below
+        setLoginFailed(false);
+        console.log(user.data);
+        dispatch({
+          type: "LOGIN",
+          username,
+          access_token: user.data.access_token,
+        });
       }
     }
   }, [user]);
