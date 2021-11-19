@@ -12,9 +12,11 @@ export default function UserList() {
     <div>
       <h2> User List</h2>
       {users
-        .sort((argument1, argument2) => (argument1.id > argument2.id ? 1 : -1))
+        .sort((argument1, argument2) =>
+          argument1._id > argument2._id ? 1 : -1
+        )
         .map((u, i) => (
-          <User {...u} short={true} key={"user-" + i} index={u.id} />
+          <User {...u} short={true} key={"user-" + i} index={u._id} />
         ))}
     </div>
   );

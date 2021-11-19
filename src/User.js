@@ -3,11 +3,11 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-navi";
 import { Card } from "react-bootstrap";
 
-function User({ id, author }) {
+function User({ _id, username }) {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>{author}</Card.Title>
+        <Card.Title>{username}</Card.Title>
         <br></br>
       </Card.Body>
     </Card>
