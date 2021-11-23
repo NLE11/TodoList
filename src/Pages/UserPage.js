@@ -4,16 +4,25 @@ import { StateContext } from "../Contexts";
 
 import User from "../User";
 import { Link } from "react-navi";
+import TodoList from "../TodoList";
 
 export default function UserPage({ id }) {
-  const { state } = useContext(StateContext);
-  const [user, getUser] = useResource(() => ({
+  console.log(id);
+  const { state, dispatch } = useContext(StateContext);
+  const [tasks, getTasks] = useResource(() => ({
     url: `/user/${id}`,
-    headers: { Authorization: `${state.user.access_token}` },
     method: "get",
   }));
-  useEffect(getUser, [id]);
 
+  useEffect(getTasks, []);
+
+  useEffect(() => {
+    // This useEffect hoook only trigger the network call when the tasks change
+    if (tasks && tasks.isLoading === false && tasks.data) {
+      dispatch({ type: "FETCH_TASKS", tasks: tasks.data }); // Within the tasks reducers I need a new action FETCH_TASK
+    }
+  }, [tasks]);
+  const { data, isLoading } = tasks;
   return (
     // In case the network is not completed, loading...
     <div>
@@ -21,6 +30,7 @@ export default function UserPage({ id }) {
       <hr />
       <div>
         <Link href="/">Go back</Link>
+        {isLoading && "Tasks loading..."} <TodoList />
       </div>
     </div>
   );
