@@ -10,7 +10,7 @@ export default function TodoList() {
   return (
     // This supposes to be <Task title = {t.title} description = {t.description} key = {'task-' + i} />
     <div>
-      <h2> Todo List</h2>
+      <h2> </h2>
       {tasks
         .sort((argument1, argument2) => (argument1.id > argument2.id ? 1 : -1))
         .map((t, i) => (

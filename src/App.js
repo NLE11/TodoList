@@ -24,6 +24,7 @@ import TaskPage from "./Pages/TaskPage";
 
 import { Container } from "react-bootstrap";
 import UserListPage from "./Pages/UserListPage";
+import UserPage from "./Pages/UserPage";
 
 function App() {
   const initialTasks = [];
@@ -71,6 +72,9 @@ function App() {
       return { view: <TaskPage id={req.params.id} /> };
     }),
     "/user": route({ view: <UserListPage /> }),
+    "/user/:id": route((req) => {
+      return { view: <UserPage id={req.params.id} /> };
+    }),
   });
 
   return (
