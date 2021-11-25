@@ -8,7 +8,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   // baseURL: "/", // Passing the proxy path
-  baseURL: "http://localhost:3000/api/",
+  baseURL: "/",
 });
 
 // Render the app in the root div within the html in the public folder
